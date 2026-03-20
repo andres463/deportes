@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Zona Deportiva | Pasión por el deporte</title>
   <!-- Google Fonts y Font Awesome para iconos deportivos -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     * {
@@ -15,15 +17,50 @@
     }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background: #fefefe;
-      color: #1e1e2f;
-      line-height: 1.5;
+      font-family: var(--font-body);
+      background: var(--page-bg);
+      color: var(--dark-text);
+      line-height: 1.55;
       scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: -20vmax;
+      pointer-events: none;
+      z-index: -1;
+      filter: blur(40px);
+      opacity: 0.9;
+    }
+
+    body::before {
+      background:
+        radial-gradient(closest-side at 25% 25%, rgba(227, 27, 35, 0.18), transparent 60%),
+        radial-gradient(closest-side at 75% 20%, rgba(10, 43, 94, 0.22), transparent 55%),
+        radial-gradient(closest-side at 60% 75%, rgba(245, 176, 66, 0.16), transparent 60%);
+    }
+
+    body::after {
+      background:
+        radial-gradient(closest-side at 10% 70%, rgba(10, 43, 94, 0.12), transparent 60%),
+        radial-gradient(closest-side at 90% 80%, rgba(227, 27, 35, 0.10), transparent 62%);
+      opacity: 0.6;
+    }
+
+    ::selection {
+      background: rgba(227, 27, 35, 0.18);
     }
 
     /* Paleta deportiva: rojo energía, azul dinámico, gris moderno */
     :root {
+      --font-display: 'Space Grotesk', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      --font-body: 'DM Sans', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
       --primary-red: #e31b23;
       --primary-dark: #b1121a;
       --secondary-blue: #0a2b5e;
@@ -32,12 +69,29 @@
       --dark-text: #111827;
       --gray-mid: #4b5563;
       --card-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.1);
+
+      --page-bg: linear-gradient(180deg, #fbfcff 0%, #f7f8fd 45%, #ffffff 100%);
+      --surface: rgba(255, 255, 255, 0.82);
+      --surface-solid: #ffffff;
+      --border: rgba(17, 24, 39, 0.08);
+      --shadow-soft: 0 18px 30px -16px rgba(17, 24, 39, 0.22);
     }
 
     .container {
       max-width: 1280px;
       margin: 0 auto;
       padding: 0 1.8rem;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid rgba(245, 176, 66, 0.55);
+      outline-offset: 3px;
+      border-radius: 10px;
     }
 
     /* HEADER / NAVBAR */
@@ -48,6 +102,13 @@
       padding: 1.2rem 0;
       flex-wrap: wrap;
       gap: 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: linear-gradient(180deg, rgba(255,255,255,0.82), rgba(255,255,255,0.64));
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(17, 24, 39, 0.06);
     }
 
     .logo {
@@ -57,6 +118,7 @@
       font-size: 1.8rem;
       font-weight: 800;
       letter-spacing: -0.5px;
+      font-family: var(--font-display);
     }
 
     .logo i {
@@ -75,6 +137,19 @@
       display: flex;
       gap: 2rem;
       list-style: none;
+    }
+
+    .nav-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      border: 1px solid rgba(17, 24, 39, 0.10);
+      background: rgba(255, 255, 255, 0.8);
+      cursor: pointer;
+      box-shadow: 0 10px 22px -18px rgba(17, 24, 39, 0.45);
     }
 
     .nav-links a {
@@ -110,6 +185,21 @@
       justify-content: space-between;
       gap: 2rem;
       padding: 3rem 0 4rem;
+      position: relative;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: -24px;
+      border-radius: 44px;
+      background:
+        radial-gradient(900px 260px at 15% 10%, rgba(227, 27, 35, 0.14), transparent 60%),
+        radial-gradient(760px 280px at 90% 18%, rgba(10, 43, 94, 0.18), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,0.60), rgba(255,255,255,0.25));
+      border: 1px solid rgba(17, 24, 39, 0.06);
+      box-shadow: 0 20px 60px -44px rgba(17, 24, 39, 0.55);
+      z-index: -1;
     }
 
     .hero-content {
@@ -126,18 +216,21 @@
       font-size: 0.8rem;
       color: var(--primary-red);
       margin-bottom: 1rem;
+      border: 1px solid rgba(227, 27, 35, 0.18);
     }
 
     .hero-content h1 {
-      font-size: 3.2rem;
-      font-weight: 800;
-      line-height: 1.2;
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4.2vw, 3.6rem);
+      font-weight: 700;
+      line-height: 1.05;
       margin-bottom: 1.2rem;
+      letter-spacing: -1.2px;
     }
 
     .hero-content h1 span {
       color: var(--primary-red);
-      border-bottom: 4px solid var(--accent-gold);
+      border-bottom: 4px solid rgba(245, 176, 66, 0.95);
     }
 
     .hero-content p {
@@ -167,6 +260,7 @@
       align-items: center;
       gap: 0.6rem;
       text-decoration: none;
+      box-shadow: 0 16px 30px -18px rgba(227, 27, 35, 0.85);
     }
 
     .btn-primary:hover {
@@ -184,6 +278,7 @@
       font-weight: 700;
       text-decoration: none;
       transition: 0.2s;
+      box-shadow: 0 18px 30px -22px rgba(10, 43, 94, 0.45);
     }
 
     .btn-outline:hover {
@@ -197,11 +292,69 @@
       text-align: center;
     }
 
-    .hero-image img {
-      max-width: 100%;
-      width: 480px;
-      filter: drop-shadow(0 20px 25px rgba(0,0,0,0.15));
-      border-radius: 32px;
+    .hero-visual {
+      width: min(520px, 100%);
+      margin: 0 auto;
+      border-radius: 34px;
+      background:
+        radial-gradient(400px 240px at 25% 20%, rgba(245, 176, 66, 0.35), transparent 60%),
+        radial-gradient(440px 260px at 75% 30%, rgba(227, 27, 35, 0.35), transparent 60%),
+        linear-gradient(140deg, rgba(10, 43, 94, 0.96), rgba(27, 58, 110, 0.96));
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+    }
+
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.06), transparent 30%, transparent 70%, rgba(255,255,255,0.04)),
+        radial-gradient(closest-side at 60% 30%, rgba(255,255,255,0.08), transparent 65%);
+      opacity: 0.9;
+    }
+
+    .hero-visual svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .hero-metrics {
+      position: absolute;
+      inset: auto 18px 18px 18px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      z-index: 2;
+    }
+
+    .metric {
+      background: rgba(255, 255, 255, 0.10);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 16px;
+      padding: 10px 12px;
+      text-align: left;
+    }
+
+    .metric strong {
+      display: block;
+      color: rgba(255,255,255,0.98);
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      letter-spacing: -0.4px;
+    }
+
+    .metric span {
+      display: block;
+      color: rgba(255,255,255,0.78);
+      font-size: 0.8rem;
     }
 
     /* Sección de deportes destacados */
@@ -210,6 +363,8 @@
       font-size: 2.3rem;
       font-weight: 800;
       margin-bottom: 1rem;
+      font-family: var(--font-display);
+      letter-spacing: -0.8px;
     }
 
     .section-sub {
@@ -228,18 +383,20 @@
     }
 
     .sport-card {
-      background: white;
+      background: rgba(255, 255, 255, 0.86);
       border-radius: 28px;
       padding: 2rem 1.5rem;
       text-align: center;
       transition: all 0.3s ease;
       box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-      border: 1px solid #f0f0f0;
+      border: 1px solid rgba(17, 24, 39, 0.07);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
 
     .sport-card:hover {
       transform: translateY(-10px);
-      box-shadow: var(--card-shadow);
+      box-shadow: 0 22px 44px -28px rgba(17, 24, 39, 0.45);
       border-color: transparent;
     }
 
@@ -270,10 +427,14 @@
 
     /* Sección eventos / partidos */
     .events-section {
-      background: var(--light-bg);
+      background: rgba(248, 249, 252, 0.78);
       border-radius: 48px;
       padding: 3rem 2rem;
       margin: 4rem 0;
+      border: 1px solid rgba(17, 24, 39, 0.06);
+      box-shadow: 0 28px 60px -56px rgba(17, 24, 39, 0.6);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
     }
 
     .events-header {
@@ -289,7 +450,7 @@
     }
 
     .event-item {
-      background: white;
+      background: rgba(255, 255, 255, 0.88);
       border-radius: 28px;
       flex: 1 1 280px;
       padding: 1.5rem;
@@ -298,7 +459,12 @@
       gap: 1.2rem;
       transition: 0.2s;
       box-shadow: 0 5px 12px rgba(0,0,0,0.03);
-      border: 1px solid #eaeef5;
+      border: 1px solid rgba(17, 24, 39, 0.08);
+    }
+
+    .event-item:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 22px 44px -34px rgba(17, 24, 39, 0.5);
     }
 
     .event-date {
@@ -347,12 +513,19 @@
     }
 
     .testi {
-      background: white;
+      background: rgba(255, 255, 255, 0.86);
       padding: 2rem;
       border-radius: 28px;
       box-shadow: 0 10px 20px rgba(0,0,0,0.03);
-      border: 1px solid #edf2f7;
+      border: 1px solid rgba(17, 24, 39, 0.07);
       transition: all 0.2s;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .testi:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 22px 44px -34px rgba(17, 24, 39, 0.5);
     }
 
     .testi i.fa-quote-left {
@@ -395,6 +568,24 @@
       text-align: center;
       margin: 4rem 0;
       color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-banner::before {
+      content: "";
+      position: absolute;
+      inset: -40px;
+      background:
+        radial-gradient(closest-side at 25% 35%, rgba(227, 27, 35, 0.35), transparent 60%),
+        radial-gradient(closest-side at 75% 30%, rgba(245, 176, 66, 0.28), transparent 65%);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .cta-banner > * {
+      position: relative;
+      z-index: 1;
     }
 
     .cta-banner h2 {
@@ -431,6 +622,58 @@
       border-top: 1px solid #e2e8f0;
       padding: 2.5rem 0 2rem;
       margin-top: 2rem;
+      background: linear-gradient(180deg, rgba(255,255,255,0.0), rgba(255,255,255,0.55));
+    }
+
+    /* Reveal on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 600ms ease, transform 700ms cubic-bezier(.2,.8,.2,1);
+      transition-delay: var(--d, 0ms);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      z-index: 80;
+      width: min(620px, calc(100% - 24px));
+      background: rgba(17, 24, 39, 0.92);
+      color: rgba(255,255,255,0.92);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 18px;
+      box-shadow: 0 26px 60px -40px rgba(17, 24, 39, 0.85);
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .toast p {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .toast button {
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.92);
+      border-radius: 14px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-weight: 700;
+      font-family: var(--font-display);
     }
 
     .footer-content {
@@ -482,11 +725,46 @@
         flex-direction: column;
         text-align: center;
       }
+
+      .nav-toggle {
+        display: inline-flex;
+        align-self: flex-end;
+      }
+
+      .nav-links {
+        width: 100%;
+        flex-direction: column;
+        gap: 0.6rem;
+        padding: 0.6rem 0 1.1rem;
+        display: none;
+      }
+
+      .nav-links a {
+        display: flex;
+        justify-content: center;
+        padding: 0.75rem 1rem;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.66);
+        border: 1px solid rgba(17, 24, 39, 0.06);
+      }
+
+      .nav-links a.btn-cta-nav {
+        background: var(--primary-red);
+        border-color: transparent;
+      }
+
+      .navbar.nav-open .nav-links {
+        display: flex;
+      }
     }
 
     @media (max-width: 480px) {
       .container {
         padding: 0 1.2rem;
+      }
+
+      .hero-metrics {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -495,12 +773,15 @@
 
 <div class="container">
   <!-- BARRA DE NAVEGACIÓN -->
-  <nav class="navbar">
-    <div class="logo">
-      <i class="fas fa-futbol"></i>
+  <nav class="navbar" id="navbar">
+    <div class="logo" aria-label="Zona Deportiva">
+      <i class="fas fa-futbol" aria-hidden="true"></i>
       <span>ZONA DEPORTIVA</span>
     </div>
-    <ul class="nav-links">
+    <button class="nav-toggle" id="navToggle" aria-controls="navLinks" aria-expanded="false" aria-label="Abrir menu">
+      <i class="fas fa-bars" aria-hidden="true"></i>
+    </button>
+    <ul class="nav-links" id="navLinks">
       <li><a href="#" class="active">Inicio</a></li>
       <li><a href="#">Deportes</a></li>
       <li><a href="#">Eventos</a></li>
@@ -510,7 +791,7 @@
   </nav>
 
   <!-- HERO PRINCIPAL -->
-  <section class="hero">
+  <section class="hero reveal">
     <div class="hero-content">
       <div class="hero-badge">
         <i class="fas fa-bolt"></i> Vive la emoción
@@ -523,38 +804,65 @@
       </div>
     </div>
     <div class="hero-image">
-      <!-- imagen ilustrativa deportiva (SVG inline o placeholder) -->
-      <img src="https://placehold.co/600x400/0a2b5e/white?text=ACCION+DEPORTIVA" alt="acción deportiva" style="border-radius: 32px; background: linear-gradient(145deg, #e31b23, #0a2b5e); object-fit: cover;">
-      <!-- Nota: en un proyecto real pondríamos una imagen real, pero simulamos gráfico atractivo -->
+      <div class="hero-visual" role="img" aria-label="Ilustracion deportiva">
+        <svg viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+          <defs>
+            <linearGradient id="zg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="rgba(255,255,255,0.08)" />
+              <stop offset="1" stop-color="rgba(255,255,255,0)" />
+            </linearGradient>
+            <radialGradient id="glow" cx="50%" cy="30%" r="60%">
+              <stop offset="0" stop-color="rgba(245,176,66,0.35)" />
+              <stop offset="1" stop-color="rgba(245,176,66,0)" />
+            </radialGradient>
+          </defs>
+          <rect width="800" height="600" fill="url(#zg)" />
+          <circle cx="520" cy="190" r="210" fill="url(#glow)" />
+          <path d="M110 420 C 210 360, 320 340, 420 390 S 650 470, 740 420" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="10" />
+          <path d="M120 310 C 240 260, 370 250, 510 290 S 680 380, 760 340" fill="none" stroke="rgba(255,255,255,0.10)" stroke-width="8" />
+          <g opacity="0.18" fill="rgba(255,255,255,0.92)">
+            <circle cx="170" cy="190" r="5" />
+            <circle cx="220" cy="140" r="6" />
+            <circle cx="260" cy="210" r="4" />
+            <circle cx="315" cy="155" r="5" />
+            <circle cx="350" cy="220" r="6" />
+          </g>
+        </svg>
+        <div class="hero-metrics" aria-hidden="true">
+          <div class="metric"><strong>+150</strong><span>rutinas semanales</span></div>
+          <div class="metric"><strong>Eventos</strong><span>en vivo cada mes</span></div>
+          <div class="metric"><strong>Coach</strong><span>tips de expertos</span></div>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- SECCIÓN DEPORTES DESTACADOS -->
-  <div>
+  <div class="reveal">
     <h2 class="section-title">Explora tu deporte favorito</h2>
     <p class="section-sub">Fútbol, baloncesto, tenis y mucho más. Encuentra guías, rutinas y torneos personalizados.</p>
   </div>
 
   <div class="sports-grid">
-    <div class="sport-card">
+    <div class="sport-card reveal" style="--d: 0ms;">
       <div class="sport-icon"><i class="fas fa-futbol"></i></div>
       <h3>Fútbol</h3>
       <p>Ligas, técnicas, análisis y los mejores goles. Vive la pasión del balompié con expertos.</p>
       <a href="#" class="sport-link">Descubrir <i class="fas fa-chevron-right"></i></a>
     </div>
-    <div class="sport-card">
+    <div class="sport-card reveal" style="--d: 90ms;">
       <div class="sport-icon"><i class="fas fa-basketball-ball"></i></div>
       <h3>Baloncesto</h3>
       <p>Entrena como una estrella, sigue la NBA y mejora tu salto. Dunk y energía pura.</p>
       <a href="#" class="sport-link">Descubrir <i class="fas fa-chevron-right"></i></a>
     </div>
-    <div class="sport-card">
+    <div class="sport-card reveal" style="--d: 180ms;">
       <div class="sport-icon"><i class="fas fa-table-tennis"></i></div>
       <h3>Tenis & Raqueta</h3>
       <p>Golpes precisos, torneos internacionales y consejos de profesionales.</p>
       <a href="#" class="sport-link">Descubrir <i class="fas fa-chevron-right"></i></a>
     </div>
-    <div class="sport-card">
+    <div class="sport-card reveal" style="--d: 270ms;">
       <div class="sport-icon"><i class="fas fa-biking"></i></div>
       <h3>Ciclismo</h3>
       <p>Rutas extremas, resistencia y equipamiento de alto rendimiento.</p>
@@ -563,13 +871,13 @@
   </div>
 
   <!-- EVENTOS DESTACADOS (PARTIDOS Y COMPETENCIAS) -->
-  <div class="events-section">
+  <div class="events-section reveal">
     <div class="events-header">
       <h2 class="section-title" style="margin-bottom: 0.5rem;">Próximos Eventos</h2>
       <p class="section-sub" style="margin-bottom: 0;">No te pierdas los encuentros más esperados del mes</p>
     </div>
     <div class="events-grid">
-      <div class="event-item">
+      <div class="event-item reveal" style="--d: 0ms;">
         <div class="event-date">
           <div class="day">15</div>
           <div class="month">MAY</div>
@@ -580,7 +888,7 @@
           <p><i class="fas fa-ticket-alt"></i> Entradas limitadas</p>
         </div>
       </div>
-      <div class="event-item">
+      <div class="event-item reveal" style="--d: 90ms;">
         <div class="event-date">
           <div class="day">22</div>
           <div class="month">MAY</div>
@@ -591,7 +899,7 @@
           <p><i class="fas fa-stopwatch"></i> Inscripción abierta</p>
         </div>
       </div>
-      <div class="event-item">
+      <div class="event-item reveal" style="--d: 180ms;">
         <div class="event-date">
           <div class="day">30</div>
           <div class="month">MAY</div>
@@ -602,7 +910,7 @@
           <p><i class="fas fa-star"></i> Invitados especiales</p>
         </div>
       </div>
-      <div class="event-item">
+      <div class="event-item reveal" style="--d: 270ms;">
         <div class="event-date">
           <div class="day">05</div>
           <div class="month">JUN</div>
@@ -617,11 +925,11 @@
   </div>
 
   <!-- TESTIMONIOS - COMUNIDAD -->
-  <div class="testimonials">
+  <div class="testimonials reveal">
     <h2 class="section-title">Lo que dice nuestra comunidad</h2>
     <p class="section-sub">Miles de atletas y aficionados ya confían en Zona Deportiva</p>
     <div class="testimonial-cards">
-      <div class="testi">
+      <div class="testi reveal" style="--d: 0ms;">
         <i class="fas fa-quote-left"></i>
         <p>"Desde que me uní, mi rendimiento mejoró muchísimo. Los planes de entrenamiento y la energía de la comunidad son increíbles."</p>
         <div class="user">
@@ -632,7 +940,7 @@
           </div>
         </div>
       </div>
-      <div class="testi">
+      <div class="testi reveal" style="--d: 110ms;">
         <i class="fas fa-quote-left"></i>
         <p>"Los eventos en vivo y las noticias al instante me mantienen conectado. La mejor plataforma para los amantes del deporte."</p>
         <div class="user">
@@ -643,7 +951,7 @@
           </div>
         </div>
       </div>
-      <div class="testi">
+      <div class="testi reveal" style="--d: 220ms;">
         <i class="fas fa-quote-left"></i>
         <p>"Me encanta la variedad de deportes y la calidad de los contenidos. Recomiendo Zona Deportiva 100%."</p>
         <div class="user">
@@ -658,7 +966,7 @@
   </div>
 
   <!-- LLAMADA FINAL INSPIRACIONAL -->
-  <div class="cta-banner">
+  <div class="cta-banner reveal">
     <h2>¿Listo para superar tus metas?</h2>
     <p>Accede a planes de entrenamiento, clases en vivo, noticias exclusivas y una comunidad que te impulsa. ¡Es gratis empezar!</p>
     <a href="#" class="btn-white"><i class="fas fa-dumbbell"></i> Activa tu cuenta gratuita</a>
@@ -682,25 +990,90 @@
   </div>
 </footer>
 
+<div class="toast" id="toast" hidden>
+  <p id="toastMsg">Listo.</p>
+  <button type="button" id="toastClose">Cerrar</button>
+</div>
+
 <!-- Pequeño script para interacción sutil (solo para mostrar efecto hover en consola o simular algo) -->
 <script>
-  // Pequeño efecto de bienvenida en consola, solo estético.
-  console.log("%c⚽ ¡Bienvenido a Zona Deportiva! 🏀 Vive la emoción del deporte.", "color: #e31b23; font-size: 14px; font-weight: bold;");
-  // Opcional: para añadir dinamismo en los botones sin sobrecargar
+  console.log("%cBienvenido a Zona Deportiva.", "color: #e31b23; font-size: 14px; font-weight: bold;");
+
+  // Menu mobile
+  const navbar = document.getElementById('navbar');
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+
+  function setNav(open) {
+    if (!navbar || !navToggle || !navLinks) return;
+    navbar.classList.toggle('nav-open', open);
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  if (navToggle) {
+    navToggle.addEventListener('click', () => {
+      const open = !navbar.classList.contains('nav-open');
+      setNav(open);
+    });
+  }
+
+  // Toast (reemplaza alerts)
+  const toast = document.getElementById('toast');
+  const toastMsg = document.getElementById('toastMsg');
+  const toastClose = document.getElementById('toastClose');
+  let toastTimer = null;
+
+  function showToast(message) {
+    if (!toast || !toastMsg) return;
+    toastMsg.textContent = message;
+    toast.hidden = false;
+    if (toastTimer) window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(() => {
+      toast.hidden = true;
+    }, 3200);
+  }
+
+  if (toastClose) {
+    toastClose.addEventListener('click', () => {
+      if (!toast) return;
+      toast.hidden = true;
+    });
+  }
+
+  // Micro-interacciones
   const ctaButtons = document.querySelectorAll('.btn-primary, .btn-white, .btn-cta-nav');
   ctaButtons.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      alert('🚀 Próximamente: accede a toda la experiencia deportiva. ¡Regístrate ya!');
+      showToast('Proximamente: registro y acceso completo.');
+      setNav(false);
     });
   });
+
   const sportLinks = document.querySelectorAll('.sport-link');
   sportLinks.forEach(link => {
     link.addEventListener('click', (e) => {
       e.preventDefault();
-      alert('🔜 Pronto encontrarás contenido detallado de esta disciplina. ¡No te lo pierdas!');
+      showToast('Contenido en preparacion para esta disciplina.');
     });
   });
+
+  // Reveal on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    revealEls.forEach((el) => io.observe(el));
+  } else {
+    revealEls.forEach((el) => el.classList.add('is-visible'));
+  }
 </script>
 </body>
 </html>
